@@ -1,0 +1,14 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+
+.nav-link {
+    font-weight: bold;
+    color: rgb(78, 118, 203);
+}
