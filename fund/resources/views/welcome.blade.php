@@ -17,11 +17,8 @@
 
 <body>
     <div>
-        <nav class="navbar-light shadow-sm m-5" style="background-color: #61b74e ">
+        <nav class="navbar-light shadow-sm m-5" style="background-color: #587c5b ">
 
-            <ul class="nav justify-content-start">
-                <img src="{{ url('/images/hands-logo.png') }}" alt="Image" width="40" />
-            </ul>
             <ul class="nav justify-content-end">
                 @if (Route::has('login'))
 
@@ -53,10 +50,11 @@
         <img src="{{ url('/images/helping.jpg') }}" class="img-thumbnail" alt="Image" />
     </div>
     <div class="text-center">
-        <p class="display-3">Help Us and We help You</p>
+        <p class="display-3">Help Me and I help You</p>
     </div>
-
-
+    <div class="text-center">
+        <img src="{{ url('/images/hands-logo.png') }}" alt="Image" width="60px" />
+    </div>
 </body>
 
 </html>
