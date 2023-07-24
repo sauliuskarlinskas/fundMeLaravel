@@ -17,9 +17,10 @@
                                     <div class="d-flex justify-content-between">
                                         <div class="d-flex">
                                             <div class="ms-2">
-                                                <div>{{ $idea->user->name }}</div>
+                                                <div>Name: {{ $idea->user->name }}</div>
                                                 <div>{{ $idea->description }}</div>
-                                                <div>{{ $idea->main_image }}</div>
+                                                <img src="{{ $idea->main_image }}" class="img-thumbnail" alt="idea">
+                                                <div>{{ $idea->money_need }} €</div>
 
 
                                                 <div>
@@ -45,7 +46,9 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-12 mt-4">
+                {{ $ideas->links() }}
+            </div>
         </div>
     </div>
 @endsection

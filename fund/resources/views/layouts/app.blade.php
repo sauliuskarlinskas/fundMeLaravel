@@ -26,7 +26,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <div class="container">
+                            <a href="{{ url('/home') }}">Home</a>
+                        </div>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -88,6 +90,8 @@
         </nav>
 
         <main class="py-4">
+            @include('msg.message')
+            @include('msg.errors')
             @yield('content')
         </main>
     </div>
