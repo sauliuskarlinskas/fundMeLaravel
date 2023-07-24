@@ -19,7 +19,7 @@
                                             <div class="ms-2">
                                                 <div>Name: {{ $idea->user->name }}</div>
                                                 <div>{{ $idea->description }}</div>
-                                                <img src="{{ $idea->main_image }}" class="img-thumbnail" alt="idea">
+                                                <img style="width: 50%" src="{{ asset($idea->main_image) }}" class="img-thumbnail" alt="idea">
                                                 <div>{{ $idea->money_need }} €</div>
 
 

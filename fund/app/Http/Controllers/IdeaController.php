@@ -66,10 +66,13 @@ class IdeaController extends Controller
        $imageFileName = basename($imagePath);
 
        // Update the image path to use the public disk for proper URL generation.
-       $imagePath = Storage::disk('public')->url('images/' . $imageFileName);
+    //    $imagePath = Storage::disk('public')->url('images/' . $imageFileName);
+       $imagePath = 'storage/images/' . $imageFileName;
    } else {
        $imagePath = null;
    }
+
+
     
         // If validation fails, redirect back with error messages
         if ($validator->fails()) {
