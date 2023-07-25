@@ -1,6 +1,7 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap" rel="stylesheet');
 
+
 // Variables
 @import 'variables';
 
@@ -8,7 +9,27 @@
 @import 'bootstrap/scss/bootstrap';
 
 
+
+
 .nav-link {
     font-weight: bold;
     color: #30477a;
 }
+
+.card-body {
+}
+
+.card-text {
+    font-size: 15px;
+    line-height: 15px;
+}
+
+.progress-bar {
+}
+
+.button-group {
+    display: flex;
+    margin-top: 5px;
+    gap: 10px;
+}
+  

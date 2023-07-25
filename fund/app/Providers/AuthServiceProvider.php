@@ -4,6 +4,9 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Models\Idea;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +24,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        
+        $this->registerPolicies();
+
+        Gate::define('delete-idea', function (User $user, Idea $idea) {
+            return $user->id === $idea->user_id;
+        });
     }
 }

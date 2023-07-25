@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Idea;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
@@ -15,7 +16,7 @@ class IdeaController extends Controller
      */
     public function index()
     {
-       
+
         $perPage = (int) 5;
 
         $ideas = Idea::select('ideas.*');
@@ -32,8 +33,22 @@ class IdeaController extends Controller
      */
     public function create()
     {
+        // Check if the user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to create an idea.');
+        }
+
+        // Get the currently logged-in user
+        $user = Auth::user();
+
+        // Check if the user already has an idea
+        if ($user->ideas()->exists()) {
+            // You can redirect them to a different page or display an error message.
+            return redirect()->route('ideas-index')->with('error', 'You can create only one idea.');
+        }
+
         $users = User::all();
-        
+
         return view(
             'ideas.create',
             [
@@ -47,33 +62,38 @@ class IdeaController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'description' => 'required|string',
-            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'money_need' => 'required|numeric|min:1',
-        ],
-        [
-           'description.required' => 'Please enter description of your idea!', 
-           'main_image.required' => 'Please upload a picture!', 
-           'money_need.required' => 'Please enter the amount you wish to get!'
-        ]
-    );
+        // Check if the user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to create an idea.');
+        }
 
-    if ($request->hasFile('main_image')) {
-        $image = $request->file('main_image');
-        $imagePath = $image->store('public/images');
-       // Get the image filename from the storage path.
-       $imageFileName = basename($imagePath);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'description' => 'required|string',
+                'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'money_need' => 'required|numeric|min:1',
+            ],
+            [
+                'description.required' => 'Please enter description of your idea!',
+                'main_image.required' => 'Please upload a picture!',
+                'money_need.required' => 'Please enter the amount you wish to get!'
+            ]
+        );
 
-       // Update the image path to use the public disk for proper URL generation.
-    //    $imagePath = Storage::disk('public')->url('images/' . $imageFileName);
-       $imagePath = 'storage/images/' . $imageFileName;
-   } else {
-       $imagePath = null;
-   }
+        if ($request->hasFile('main_image')) {
+            $image = $request->file('main_image');
+            $imagePath = $image->store('public/images');
+            // Get the image filename from the storage path.
+            $imageFileName = basename($imagePath);
 
+            // Update the image path to use the public disk for proper URL generation.
 
-    
+            $imagePath = 'storage/images/' . $imageFileName;
+        } else {
+            $imagePath = null;
+        }
+
         // If validation fails, redirect back with error messages
         if ($validator->fails()) {
             $request->flash();
@@ -116,8 +136,24 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    public function delete(Idea $idea)
+    {
+        return view('ideas.delete', [
+            'idea' => $idea
+        ]);
+    }
+
     public function destroy(Idea $idea)
     {
-        //
+        // Check if the user is authorized to delete the idea
+        if (Gate::denies('delete-idea', $idea)) {
+            return redirect()->route('ideas-index')->with('error', 'You are not authorized to delete this idea.');
+        }
+
+        $idea->delete();
+        return redirect()
+            ->route('ideas-index')
+            ->with('success', 'Idea has been deleted!');
     }
 }

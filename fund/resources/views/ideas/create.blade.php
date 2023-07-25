@@ -13,8 +13,6 @@
                                     <label  class="form-label">{{ Auth::user()->name }}</label>
                                     <input name="user_id" type="text" class="form-control" value="{{Auth::user()->id}}" hidden>
                             </div>
-
-
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                                 <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
