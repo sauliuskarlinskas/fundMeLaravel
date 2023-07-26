@@ -10,12 +10,13 @@
                         <form method="post" action="{{ route('ideas-store') }}" enctype="multipart/form-data">
 
                             <div class="mb-3">
-                                    <label  class="form-label">{{ Auth::user()->name }}</label>
-                                    <input name="user_id" type="text" class="form-control" value="{{Auth::user()->id}}" hidden>
+                                <label class="form-label">{{ Auth::user()->name }}</label>
+                                <input name="user_id" type="text" class="form-control" value="{{ Auth::user()->id }}"
+                                    hidden>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3" value={{ old('description')}}></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Image</label>
@@ -23,7 +24,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Amount of money you need</label>
-                                <input name="money_need" type="text" class="form-control">
+                                <input name="money_need" type="text" class="form-control" value={{ old('money_need') }}>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Add</button>

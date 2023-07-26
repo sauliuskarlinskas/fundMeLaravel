@@ -17,28 +17,32 @@
                             <div class="card-body">
                                 <h5 class="card-title">Name: {{ $idea->user->name }}</h5>
                                 <p class="card-text">{{ $idea->description }}</p>
-                                <p class="card-text">Money I need: {{ $idea->money_need }}</p>
+                                <p class="card-text">Money I need: {{ $idea->money_need }} € <a class="btn btn-secondary btn-lg">
+                                    Donate
+                                </a></p>
 
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                         aria-valuemin="0" aria-valuemax="100">25%</div>
                                 </div>
+                               
 
                                 <div class="button-group">
-                                    <a class="btn btn-success">
+                                    <a class="btn btn-success" href="{{ route('ideas-edit', $idea) }}">
                                         Edit
                                     </a>
-                                    <a class="btn btn-danger" href="{{route('ideas-delete', $idea)}}">
+                                    <a class="btn btn-danger" href="{{ route('ideas-delete', $idea) }}">
                                         Delete
                                     </a>
-                                    <button class="btn btn-danger bi bi-suit-heart-fill">
-                                    </button>
+                                    <a class="btn btn-danger bi bi-suit-heart-fill"> <span
+                                            class="badge bg-primary rounded-pill">0</span>
+                                    </a>
 
 
                                 </div>
 
                             </div>
-                           
+
                         </div>
 
 

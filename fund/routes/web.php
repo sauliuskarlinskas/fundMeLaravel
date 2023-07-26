@@ -28,7 +28,10 @@ Route::prefix('ideas')->name('ideas-')->group(function () {
     Route::get('/edit/{idea}', [I::class, 'edit'])->name('edit');
     Route::put('/{idea}', [I::class, 'update'])->name('update');
 
+
 });
+
+
 
 Auth::routes();
 
