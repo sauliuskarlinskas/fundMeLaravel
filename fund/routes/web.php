@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IdeaController as I;
+use App\Http\Controllers\TagController as T;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,22 @@ Route::prefix('ideas')->name('ideas-')->group(function () {
     Route::get('/edit/{idea}', [I::class, 'edit'])->name('edit');
     Route::put('/{idea}', [I::class, 'update'])->name('update');
 
+
+});
+
+Route::prefix('tags')->name('tags-')->group(function () {
+
+    Route::get('/', [T::class, 'index'])->name('index');
+    Route::get('/create', [T::class, 'create'])->name('create');
+
+    Route::get('/delete/{tag}', [T::class, 'delete'])->name('delete');
+    Route::delete('/{tag}', [T::class, 'destroy'])->name('destroy');
+
+
+    Route::post('/', [T::class, 'store'])->name('store');
+
+    Route::get('/edit/{tag}', [T::class, 'edit'])->name('edit');
+    Route::put('/{tag}', [T::class, 'update'])->name('update');
 
 });
 

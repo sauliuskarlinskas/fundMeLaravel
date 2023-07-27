@@ -1,1 +1,0 @@
-<i class="menu-count">{{$count}}</i>
