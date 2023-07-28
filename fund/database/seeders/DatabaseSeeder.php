@@ -48,14 +48,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123')
         ]);
 
-        foreach (range(1, 5) as $_) {
-            DB::table('ideas')->insert([
-                'user_id' => $faker->numberBetween(1, 5),
-                'description' => $faker->realText($maxNbChars = 100, $indexSize = 2),
-                'main_image' => $faker->imageUrl($width = 640, $height = 480, 'cats'),
-                'money_need' => $faker->numberBetween($min = 100, $max = 9000),
-                'love' => 0
-            ]);
-        }
+        // foreach (range(1, 5) as $_) {
+        //     DB::table('ideas')->insert([
+        //         'user_id' => $faker->numberBetween(1, 5),
+        //         'description' => $faker->realText($maxNbChars = 100, $indexSize = 2),
+        //         'main_image' => $faker->imageUrl($width = 640, $height = 480, 'cats'),
+        //         'money_need' => $faker->numberBetween($min = 100, $max = 9000),
+        //         'love' => 0
+        //     ]);
+        // }
     }
 }

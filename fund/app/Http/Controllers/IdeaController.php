@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IdeaTag;
 use App\Models\User;
 use App\Models\Idea;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class IdeaController extends Controller
 {
@@ -16,6 +19,8 @@ class IdeaController extends Controller
      */
     public function index()
     {
+        $tags = Tag::all();
+        $ideas = Idea::all();
 
         $perPage = (int) 5;
 
@@ -24,6 +29,7 @@ class IdeaController extends Controller
 
         return view('ideas.index', [
             'ideas' => $ideas,
+            'tags' => $tags,
             'perPage' => $perPage
         ]);
     }
@@ -67,13 +73,7 @@ class IdeaController extends Controller
             return redirect()->route('login')->with('error', 'You need to log in to create an idea.');
         }
 
-        // $user = Auth::user();
-        // // Check if the user already has an idea
-        // if ($user->ideas()->exists()) {
-        //     // You can redirect them to a different page or display an error message.
-        //     return redirect()->route('ideas-index')->with('error', 'You can create only one idea.');
-        // }
-
+        
         $validator = Validator::make(
             $request->all(),
             [
@@ -232,4 +232,51 @@ class IdeaController extends Controller
             ->route('ideas-index')
             ->with('success', 'Idea has been deleted!');
     }
+
+    public function addTag(Request $request, Idea $idea)
+    {
+
+        $ideaId = $idea->id;
+        $tagId = $request->tag_id ?? null;
+
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'tag_id' => [
+                    'required',
+                    Rule::unique('idea_tags')->where(function ($query) use ($ideaId, $tagId) {
+                        return $query->where('idea_id', $ideaId)
+                            ->where('tag_id', $tagId);
+                    }),
+                ],
+            ],
+            [
+                'tag_id.required' => 'Please select tag!',
+                'tag_id.unique' => 'Tag already exists!',
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $ideaTag = new IdeaTag;
+        $ideaTag->idea_id = $idea->id;
+        $ideaTag->tag_id = $request->tag_id;
+        $ideaTag->save();
+        return redirect()->back()->with('success', 'Tag has been added!');
+    }
+
+    public function removeTag(Idea $idea, Tag $tag)
+    {
+        $ideaTag = IdeaTag::where('idea_id', $idea->id)
+        ->where('tag_id', $tag->id)
+        ->first();
+        $ideaTag->delete();
+        return redirect()->back()->with('success', 'Tag has been removed!');
+    }
+
 }

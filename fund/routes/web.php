@@ -22,13 +22,19 @@ Route::get('/', function () {
 Route::prefix('ideas')->name('ideas-')->group(function () {
 
     Route::get('/', [I::class, 'index'])->name('index');
+
     Route::get('/create', [I::class, 'create'])->name('create');
     Route::post('/', [I::class, 'store'])->name('store');
-    Route::get('/delete/{idea}', [I::class, 'delete'])->name('delete');
-    Route::delete('/{idea}', [I::class, 'destroy'])->name('destroy');
+
     Route::get('/edit/{idea}', [I::class, 'edit'])->name('edit');
     Route::put('/{idea}', [I::class, 'update'])->name('update');
 
+    Route::get('/delete/{idea}', [I::class, 'delete'])->name('delete');
+    Route::delete('/{idea}', [I::class, 'destroy'])->name('destroy');
+
+    Route::post('/tags/{idea}', [I::class, 'addTag'])->name('add-tag');
+    Route::delete('/tags/{idea}/{tag}', [I::class, 'removeTag'])->name('remove-tag');
+    // Route::post('/tags/create/{idea}', [I::class, 'createTag'])->name('create-tag');
 
 });
 

@@ -12,4 +12,9 @@ class Idea extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'idea_tags', 'idea_id', 'tag_id');
+    }
 }
