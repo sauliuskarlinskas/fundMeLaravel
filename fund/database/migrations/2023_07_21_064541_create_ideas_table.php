@@ -18,6 +18,7 @@ return new class extends Migration
             $table->char('description',255);
             $table->binary('main_image')->nullable();
             $table->char('money_need',30);
+            $table->char('money_got',30);
             $table->char('love',50);
             $table->timestamps();
         });

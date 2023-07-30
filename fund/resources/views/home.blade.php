@@ -17,20 +17,19 @@
                             <div class="card-body">
                                 <h5 class="card-title">Name: {{ $idea->user->name }}</h5>
                                 <p class="card-text">{{ $idea->description }}</p>
-                                <p class="card-text">Money I need: {{ $idea->money_need }} € <a class="btn btn-secondary">
-                                        Donate
-                                    </a></p>
+                                <p class="card-text">Money I need: {{ $idea->money_need }} € </p>
+                                <p class="card-text">Money I have: {{ $idea->money_got }} € </p>
 
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                         aria-valuemin="0" aria-valuemax="100">25%</div>
                                 </div>
+                                <a class="btn btn-success" href="{{ route('ideas-donate', $idea)}}">Donate</a>
 
+                                <a class="btn btn-danger bi bi-suit-heart-fill"> <span
+                                        class="badge bg-primary rounded-pill">0</span>
+                                </a>
                                 <div>
-                                    <a class="btn btn-danger bi bi-suit-heart-fill"> <span
-                                            class="badge bg-primary rounded-pill">0</span>
-                                    </a>
-
                                     <form action="{{ route('ideas-add-tag', $idea) }}" method="post">
                                         <div class="input-group mb-3 mt-3">
                                             <button class="btn btn-secondary" type="submit">Add tag from list</button>
@@ -77,9 +76,9 @@
             <li class="list-group-item">
                 <p class="text-center">No ideas</p>
             </li>
-            <div>
+            {{-- <div>
                 {{ $ideas->links() }}
-            </div>
+            </div> --}}
         @endforelse
 
 

@@ -22,15 +22,11 @@ class IdeaController extends Controller
         $tags = Tag::all();
         $ideas = Idea::all();
 
-        $perPage = (int) 5;
-
-        $ideas = Idea::select('ideas.*');
-        $ideas = $ideas->paginate($perPage)->withQueryString();
+        // $ideas = $ideas->paginate(5)->withQueryString();
 
         return view('ideas.index', [
             'ideas' => $ideas,
-            'tags' => $tags,
-            'perPage' => $perPage
+            'tags' => $tags
         ]);
     }
 
@@ -112,6 +108,7 @@ class IdeaController extends Controller
         $idea->description = $request->description;
         $idea->main_image = $imagePath;
         $idea->money_need = $request->money_need;
+        $idea->money_got = 0;
         $idea->love = 0;
         $idea->save();
         return redirect()->route('ideas-index')->with('success', 'New idea has been added!');
@@ -318,6 +315,41 @@ class IdeaController extends Controller
         $ideaTag->tag_id = $tag->id;
         $ideaTag->save();
         return redirect()->back()->with('success', 'Tag has been added!');
+    }
+
+    public function donate(Idea $idea)
+    {
+
+        // $amount = $request->amount;
+
+        // $validator = Validator::make(
+        //     $request->all(),
+        //     [
+        //         'amount' => 'required|integer|min:0'
+        //     ],
+        //     [
+        //         'amount.required' => 'Please enter the amount!',
+        //         'amount.integer' => 'The amount has to be integer!',
+        //         'amount.min' => 'The amount must be a positive integer!'
+        //     ]
+        // );
+
+        // if ($validator->fails()) {
+        //     $request->flash();
+        //     return redirect()->back()->withErrors($validator);
+        // }
+
+        // if (isset($request->add)) {
+
+        //     $idea->money_got += $amount;
+
+            // $idea->save();
+            return redirect()
+                ->route('home')
+                ->with('success', ' Thank you for your kindness!');
+        }
+
+       
     }
 
 }

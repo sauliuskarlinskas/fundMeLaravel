@@ -18,6 +18,7 @@
                                 <h5 class="card-title">Name: {{ $idea->user->name }}</h5>
                                 <p class="card-text">{{ $idea->description }}</p>
                                 <p class="card-text">Money I need: {{ $idea->money_need }} € </p>
+                                <p class="card-text">Money I have: {{ $idea->money_got }} € </p>
 
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
@@ -32,10 +33,7 @@
                                     <a class="btn btn-danger" href="{{ route('ideas-delete', $idea) }}">
                                         Delete
                                     </a>
-                                    <a class="btn btn-danger bi bi-suit-heart-fill"> <span
-                                            class="badge bg-primary rounded-pill">0</span>
-                                    </a>
-
+                                  
                                 </div>
 
                                 <form action="{{ route('ideas-add-tag', $idea) }}" method="post">
@@ -82,11 +80,10 @@
             <li class="list-group-item">
                 <p class="text-center">No ideas</p>
             </li>
-            <div>
-                {{ $ideas->links() }}
-            </div>
         @endforelse
-
+        {{-- <div>
+            {{ $ideas->links() }}
+        </div> --}}
 
     </div>
 @endsection
