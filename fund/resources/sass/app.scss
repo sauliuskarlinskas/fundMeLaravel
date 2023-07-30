@@ -16,27 +16,30 @@
     color: #30477a;
 }
 
-.card-body {
-}
 
 .card-text {
     font-size: 15px;
     line-height: 15px;
 }
 
-.progress-bar {
-}
 
 .button-group {
     display: flex;
     margin-top: 5px;
     gap: 10px;
 }
+
+.btn {
+    margin-left: 5px;
+}
   
 .badge bg-primary rounded-pill {
     margin-left: 5px;
 }
 
+.progress {
+    margin-bottom: 5px;
+}
 
 .tag-form {
     width: auto;
@@ -44,6 +47,7 @@
     margin: 5px;
     gap: 5px;
 }
+
 
 
 

@@ -279,4 +279,45 @@ class IdeaController extends Controller
         return redirect()->back()->with('success', 'Tag has been removed!');
     }
 
+    public function createTag(Request $request, Idea $idea)
+    {
+
+        $ideaId = $idea->id;
+        $tagName = $request->tag_name ?? null;
+
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'tag_name' => [
+                    'required',
+                    'max:50',
+                    'min:3',
+                ],
+            ],
+            [
+                'tag_name.required' => 'Please enter tag name!',
+                'tag_name.max' => 'Tag name is too long!',
+                'tag_name.min' => 'Tag name is too short!',
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $tag = Tag::firstOrCreate([
+            'name' => $tagName
+        ]);
+
+
+        $ideaTag = new IdeaTag;
+        $ideaTag->idea_id = $ideaId;
+        $ideaTag->tag_id = $tag->id;
+        $ideaTag->save();
+        return redirect()->back()->with('success', 'Tag has been added!');
+    }
+
 }

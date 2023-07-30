@@ -34,7 +34,7 @@ Route::prefix('ideas')->name('ideas-')->group(function () {
 
     Route::post('/tags/{idea}', [I::class, 'addTag'])->name('add-tag');
     Route::delete('/tags/{idea}/{tag}', [I::class, 'removeTag'])->name('remove-tag');
-    // Route::post('/tags/create/{idea}', [I::class, 'createTag'])->name('create-tag');
+    Route::post('/tags/create/{idea}', [I::class, 'createTag'])->name('create-tag');
 
 });
 

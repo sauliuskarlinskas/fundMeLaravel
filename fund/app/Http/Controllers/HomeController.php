@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Idea;
+use App\Models\Tag;
 
 use Illuminate\Http\Request;
 
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $tags = Tag::all();
+        $ideas = Idea::all();
+
+        return view('home', ['ideas' => $ideas,
+        'tags' => $tags]);
     }
 }
