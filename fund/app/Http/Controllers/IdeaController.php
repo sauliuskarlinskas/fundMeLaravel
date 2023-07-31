@@ -69,7 +69,7 @@ class IdeaController extends Controller
             return redirect()->route('login')->with('error', 'You need to log in to create an idea.');
         }
 
-        
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -270,8 +270,8 @@ class IdeaController extends Controller
     public function removeTag(Idea $idea, Tag $tag)
     {
         $ideaTag = IdeaTag::where('idea_id', $idea->id)
-        ->where('tag_id', $tag->id)
-        ->first();
+            ->where('tag_id', $tag->id)
+            ->first();
         $ideaTag->delete();
         return redirect()->back()->with('success', 'Tag has been removed!');
     }
@@ -320,36 +320,92 @@ class IdeaController extends Controller
     public function donate(Idea $idea)
     {
 
-        // $amount = $request->amount;
+        return view(
+            'ideas.donate',
+            [
+                'idea' => $idea
+            ]
+        );
 
-        // $validator = Validator::make(
-        //     $request->all(),
-        //     [
-        //         'amount' => 'required|integer|min:0'
-        //     ],
-        //     [
-        //         'amount.required' => 'Please enter the amount!',
-        //         'amount.integer' => 'The amount has to be integer!',
-        //         'amount.min' => 'The amount must be a positive integer!'
-        //     ]
-        // );
+    }
+    public function addmoney(Request $request, Idea $idea)
+    {
 
-        // if ($validator->fails()) {
-        //     $request->flash();
-        //     return redirect()->back()->withErrors($validator);
+        $amount = $request->amount;
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'amount' => 'required|integer|min:0'
+            ],
+            [
+                'amount.required' => 'Please enter the amount!',
+                'amount.integer' => 'The amount has to be integer!',
+                'amount.min' => 'The amount must be a positive integer!'
+            ]
+        );
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
+        // Check if the new donation amount doesn't exceed the remaining money needed.
+        // $remainingMoneyNeeded = $idea->money_need - $idea->money_got;
+        // if ($amount > $remainingMoneyNeeded) {
+        //     return redirect()->back()->withErrors(['amount' => 'The amount exceeds the remaining money needed.']);
         // }
 
-        // if (isset($request->add)) {
+        if ($request->has('add')) {
+            $amount = $request->input('amount');
 
-        //     $idea->money_got += $amount;
+            $idea->money_got += $amount;
 
-            // $idea->save();
+            $idea->save();
             return redirect()
                 ->route('home')
                 ->with('success', ' Thank you for your kindness!');
         }
 
-       
+
     }
+
+    public function addLove(Request $request, Idea $idea)
+    {
+
+    //      // Check if the user is logged in
+    // if (Auth::check()) {
+    //     // Get the currently authenticated user
+    //     $user = Auth::user();
+
+    //     // Check if the user has already given a heart to this idea
+    //     if (!$user->hearts->contains($idea)) {
+    //         // Attach the idea to the user's hearts
+    //         $user->hearts()->attach($idea);
+            
+    //         // Increment the love count of the idea
+    //         $idea->increment('love');
+
+    //         return redirect()->back()->with('success', 'Heart has been added!');
+    //     }
+    // }
+
+    // // If the user has already given a heart or not logged in, redirect back with an error message or handle it based on your requirements.
+    // return redirect()->back()->withErrors(['error' => 'You have already given a heart to this idea.']);
+
+
+
+         // Get the current love count from the idea
+         $currentLoveCount = $idea->love;
+
+         // Increment the love count by 1
+         $idea->love = $currentLoveCount + 1;
+ 
+         // Save the updated idea to the database
+         $idea->save();
+
+        return redirect()->back()->with('success', 'Heart has been added!');
+    }
+
 
 }

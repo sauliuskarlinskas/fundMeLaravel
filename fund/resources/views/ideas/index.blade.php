@@ -21,8 +21,12 @@
                                 <p class="card-text">Money I have: {{ $idea->money_got }} € </p>
 
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                                        aria-valuemin="0" aria-valuemax="100">25%</div>
+                                    <div class="progress-bar progress-bar-striped" role="progressbar"
+                                        style="width: {{ ($idea->money_got / $idea->money_need) * 100 }}%;"
+                                        aria-valuenow="{{ $idea->money_got }}" aria-valuemin="0"
+                                        aria-valuemax="{{ $idea->money_need }}">
+                                        {{ round(($idea->money_got / $idea->money_need) * 100, 2) }}%
+                                    </div>
                                 </div>
 
 

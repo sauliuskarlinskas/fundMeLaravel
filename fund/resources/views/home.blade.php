@@ -21,14 +21,23 @@
                                 <p class="card-text">Money I have: {{ $idea->money_got }} € </p>
 
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                                        aria-valuemin="0" aria-valuemax="100">25%</div>
+                                    <div class="progress-bar progress-bar-striped" role="progressbar"
+                                        style="width: {{ ($idea->money_got / $idea->money_need) * 100 }}%;"
+                                        aria-valuenow="{{ $idea->money_got }}" aria-valuemin="0"
+                                        aria-valuemax="{{ $idea->money_need }}">
+                                        {{ round(($idea->money_got / $idea->money_need) * 100, 2) }}%
+                                    </div>
                                 </div>
-                                <a class="btn btn-success" href="{{ route('ideas-donate', $idea)}}">Donate</a>
+                                <a class="btn btn-success" href="{{ route('ideas-donate', $idea) }}">Donate</a>
 
-                                <a class="btn btn-danger bi bi-suit-heart-fill"> <span
-                                        class="badge bg-primary rounded-pill">0</span>
-                                </a>
+                                @auth
+                                <form action="{{ route('ideas-add-love', $idea) }}" method="post">
+                                    <button class="btn btn-danger bi bi-suit-heart-fill" type="submit"> <span class="badge bg-primary rounded-pill">{{ $idea->love }}</span>
+                                    </button>
+                                    @csrf
+                                </form>
+                                @endauth
+
                                 <div>
                                     <form action="{{ route('ideas-add-tag', $idea) }}" method="post">
                                         <div class="input-group mb-3 mt-3">
