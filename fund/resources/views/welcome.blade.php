@@ -21,6 +21,11 @@
         <nav class="navbar-light shadow-sm m-5" style="background-color: #587c5b ">
 
             <ul class="nav justify-content-end">
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url('/home') }}">Guest</a>
+                </li>
+
                 @if (Route::has('login'))
 
                     @auth

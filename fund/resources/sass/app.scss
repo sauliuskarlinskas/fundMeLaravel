@@ -48,7 +48,16 @@
     gap: 5px;
 }
 
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
 
+.tag-line {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
 
 
 

@@ -372,38 +372,16 @@ class IdeaController extends Controller
 
     public function addLove(Request $request, Idea $idea)
     {
+        // Get the current love count from the idea
+        $currentLoveCount = $idea->love;
 
-    //      // Check if the user is logged in
-    // if (Auth::check()) {
-    //     // Get the currently authenticated user
-    //     $user = Auth::user();
+        // Increment the love count by 1
+        $idea->love = $currentLoveCount + 1;
 
-    //     // Check if the user has already given a heart to this idea
-    //     if (!$user->hearts->contains($idea)) {
-    //         // Attach the idea to the user's hearts
-    //         $user->hearts()->attach($idea);
-            
-    //         // Increment the love count of the idea
-    //         $idea->increment('love');
+        // Save the updated idea to the database
+        $idea->save();
 
-    //         return redirect()->back()->with('success', 'Heart has been added!');
-    //     }
-    // }
-
-    // // If the user has already given a heart or not logged in, redirect back with an error message or handle it based on your requirements.
-    // return redirect()->back()->withErrors(['error' => 'You have already given a heart to this idea.']);
-
-
-
-         // Get the current love count from the idea
-         $currentLoveCount = $idea->love;
-
-         // Increment the love count by 1
-         $idea->love = $currentLoveCount + 1;
- 
-         // Save the updated idea to the database
-         $idea->save();
-
+        // Redirect back to the page after giving the heart
         return redirect()->back()->with('success', 'Heart has been added!');
     }
 
