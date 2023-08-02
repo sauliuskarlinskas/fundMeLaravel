@@ -41,22 +41,24 @@
     margin-bottom: 5px;
 }
 
-.tag-form {
-    width: auto;
-    display: flex;
-    margin: 5px;
-    gap: 5px;
-}
+
 
 .card-footer {
     display: flex;
     justify-content: space-between;
 }
 
+.add-tag {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+}
+
 .tag-line {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
+    gap: 3px;
 }
 
 

@@ -20,6 +20,10 @@ return new class extends Migration
             $table->char('money_need',30);
             $table->char('money_got',30);
             $table->unsignedBigInteger('love');
+            $table->binary('img_1')->nullable();
+            $table->binary('img_2')->nullable();
+            $table->binary('img_3')->nullable();
+            $table->binary('img_4')->nullable();
             $table->timestamps();
         });
     }

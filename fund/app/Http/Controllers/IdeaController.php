@@ -74,7 +74,11 @@ class IdeaController extends Controller
             $request->all(),
             [
                 'description' => 'required|string',
-                'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'main_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'img_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'img_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'img_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'img_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'money_need' => 'required|numeric|min:1',
             ],
             [
@@ -107,6 +111,12 @@ class IdeaController extends Controller
         $idea->user_id = $request->user_id;
         $idea->description = $request->description;
         $idea->main_image = $imagePath;
+
+        $idea->img_1 = $this->saveImage($request->file('img_1'));
+        $idea->img_2 = $this->saveImage($request->file('img_2'));
+        $idea->img_3 = $this->saveImage($request->file('img_3'));
+        $idea->img_4 = $this->saveImage($request->file('img_4'));
+
         $idea->money_need = $request->money_need;
         $idea->money_got = 0;
         $idea->love = 0;
@@ -179,6 +189,63 @@ class IdeaController extends Controller
             $imagePath = 'storage/images/' . $imageFileName;
         } else {
             $imagePath = null;
+        }
+
+        // if ($request->hasFile('img_1')) {
+        //     $image = $request->file('img_1');
+        //     $imagePath = $image->store('public/images');
+        //     $imageFileName = basename($imagePath);
+
+
+        //     $imagePath = 'storage/images/' . $imageFileName;
+        // } else {
+        //     $imagePath = null;
+        // }
+
+        // if ($request->hasFile('img_2')) {
+        //     $image = $request->file('img_2');
+        //     $imagePath = $image->store('public/images');
+        //     $imageFileName = basename($imagePath);
+
+
+        //     $imagePath = 'storage/images/' . $imageFileName;
+        // } else {
+        //     $imagePath = null;
+        // }
+
+        // if ($request->hasFile('img_3')) {
+        //     $image = $request->file('img_3');
+        //     $imagePath = $image->store('public/images');
+        //     $imageFileName = basename($imagePath);
+
+
+        //     $imagePath = 'storage/images/' . $imageFileName;
+        // } else {
+        //     $imagePath = null;
+        // }
+
+        // if ($request->hasFile('img_4')) {
+        //     $image = $request->file('img_4');
+        //     $imagePath = $image->store('public/images');
+        //     $imageFileName = basename($imagePath);
+
+
+        //     $imagePath = 'storage/images/' . $imageFileName;
+        // } else {
+        //     $imagePath = null;
+        // }
+
+        if ($request->hasFile('img_1')) {
+            $idea->img_1 = $this->saveImage($request->file('img_1'));
+        }
+        if ($request->hasFile('img_2')) {
+            $idea->img_2 = $this->saveImage($request->file('img_2'));
+        }
+        if ($request->hasFile('img_3')) {
+            $idea->img_3 = $this->saveImage($request->file('img_3'));
+        }
+        if ($request->hasFile('img_4')) {
+            $idea->img_4 = $this->saveImage($request->file('img_4'));
         }
 
         if ($validator->fails()) {
@@ -385,5 +452,16 @@ class IdeaController extends Controller
         return redirect()->back()->with('success', 'Heart has been added!');
     }
 
+
+    private function saveImage($imageFile)
+{
+    if (!$imageFile) {
+        return null;
+    }
+
+    $imagePath = $imageFile->store('public/images');
+    $imageFileName = basename($imagePath);
+    return 'storage/images/' . $imageFileName;
+}
 
 }

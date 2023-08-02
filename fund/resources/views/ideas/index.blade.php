@@ -40,8 +40,8 @@
                                     </a>
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
+                                <div class="add-tag">
+                                    <div>
                                         <form action="{{ route('ideas-add-tag', $idea) }}" method="post">
                                             <div class="input-group mb-2 mt-2">
                                                 <button class="btn btn-secondary" type="submit">Add tag from list</button>
@@ -56,7 +56,7 @@
                                         </form>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div>
                                         <form action="{{ route('ideas-create-tag', $idea) }}" method="post">
                                             <div class="input-group mb-2">
                                                 <button class="btn btn-secondary" type="submit" id="button-addon2">Create
@@ -73,7 +73,7 @@
 
                         </div>
 
-                        <div class="card-footer">
+                        
                             <div class="tag-line">
                                 @foreach ($idea->tags as $tag)
                                     <form class="tag-form" action="{{ route('ideas-remove-tag', [$idea, $tag]) }}"
@@ -86,24 +86,36 @@
                                 @endforeach
                             </div>
 
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="galery">
-                                <div class="card-body">
-                                    <a href="#" class="btn btn-primary">Galery</a>
+                            <div class="card-group">
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_1) }}" class="card-img-top" alt="galery 1">
                                 </div>
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_2) }}" class="card-img-top" alt="galery 2">
+                                </div>
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_3) }}" class="card-img-top" alt="galery 3">
+                                </div>
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_4) }}" class="card-img-top" alt="galery 4">
+                                </div>
+                                
                             </div>
-                        </div>
+
+                        
 
                     </div>
+
                 </div>
             </div>
+    </div>
 
-        @empty
-            <li class="list-group-item">
-                <p class="text-center">No ideas</p>
-            </li>
-        @endforelse
-        {{-- <div>
+@empty
+    <li class="list-group-item">
+        <p class="text-center">No ideas</p>
+    </li>
+    @endforelse
+    {{-- <div>
             {{ $ideas->links() }}
         </div> --}}
 

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Edit your idea</h5>
@@ -19,10 +19,43 @@
                                 <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"
                                     value={{ old('description', $idea->description) }}></textarea>
                             </div>
-                            <div class="mb-3">
+                            <div class="card">
                                 <label for="formFile" class="form-label">Change main image</label>
-                                <input name="main_image" class="form-control" type="file" id="formFile">
+                                <img src="{{ asset($idea->main_image) }}" alt="idea">
+                                <div class="card-body">
+                                    <input name="main_image" class="form-control mt-2" type="file" id="formFile">
+                                </div>
                             </div>
+
+                            <div class="card-group">
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_1) }}" alt="galery img">
+                                    <div class="card-body">
+                                        <input name="img_1" class="form-control mt-2" type="file" id="formFile1">
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_2) }}" alt="galery img">
+                                    <div class="card-body">
+                                        <input name="img_2" class="form-control mt-2" type="file" id="formFile2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-group">
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_3) }}" alt="galery img">
+                                    <div class="card-body">
+                                        <input name="img_3" class="form-control mt-2" type="file" id="formFile3">
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <img src="{{ asset($idea->img_4) }}" alt="galery img">
+                                    <div class="card-body">
+                                        <input name="img_4" class="form-control mt-2" type="file" id="formFile4">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="mb-3">
                                 <label class="form-label">Change amount of money you need</label>
                                 <input name="money_need" type="text" class="form-control"
