@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class IdeaController extends Controller
 {
@@ -73,7 +74,7 @@ class IdeaController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'description' => 'required|string',
+                'description' => 'required|string|max:1000',
                 'main_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 'img_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'img_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -83,23 +84,11 @@ class IdeaController extends Controller
             ],
             [
                 'description.required' => 'Please enter description of your idea!',
+                'description.max' => 'The description cannot be more than 1000 characters.',
                 'main_image.required' => 'Please upload a picture!',
                 'money_need.required' => 'Please enter the amount you wish to get!'
             ]
         );
-
-        if ($request->hasFile('main_image')) {
-            $image = $request->file('main_image');
-            $imagePath = $image->store('public/images');
-            // Get the image filename from the storage path.
-            $imageFileName = basename($imagePath);
-
-            // Update the image path to use the public disk for proper URL generation.
-
-            $imagePath = 'storage/images/' . $imageFileName;
-        } else {
-            $imagePath = null;
-        }
 
         // If validation fails, redirect back with error messages
         if ($validator->fails()) {
@@ -110,8 +99,8 @@ class IdeaController extends Controller
         $idea = new Idea();
         $idea->user_id = $request->user_id;
         $idea->description = $request->description;
-        $idea->main_image = $imagePath;
 
+        $idea->main_image = $this->saveImage($request->file('main_image'));
         $idea->img_1 = $this->saveImage($request->file('img_1'));
         $idea->img_2 = $this->saveImage($request->file('img_2'));
         $idea->img_3 = $this->saveImage($request->file('img_3'));
@@ -169,71 +158,40 @@ class IdeaController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'description' => 'required|string',
+                'description' => 'required|string|max:1000',
                 'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'money_need' => 'required|numeric|min:1',
             ],
             [
                 'description.required' => 'Please enter description of your idea!',
+                'description.max' => 'The description cannot be more than 1000 characters.',
                 'main_image.required' => 'Please upload a picture!',
                 'money_need.required' => 'Please enter the amount you wish to get!'
             ]
         );
 
+
         if ($request->hasFile('main_image')) {
-            $image = $request->file('main_image');
-            $imagePath = $image->store('public/images');
-            $imageFileName = basename($imagePath);
-
-
-            $imagePath = 'storage/images/' . $imageFileName;
-        } else {
-            $imagePath = null;
+            $idea->main_image = $this->saveImage($request->file('main_image'));
         }
 
-        // if ($request->hasFile('img_1')) {
-        //     $image = $request->file('img_1');
-        //     $imagePath = $image->store('public/images');
-        //     $imageFileName = basename($imagePath);
 
-
-        //     $imagePath = 'storage/images/' . $imageFileName;
-        // } else {
-        //     $imagePath = null;
-        // }
-
-        // if ($request->hasFile('img_2')) {
-        //     $image = $request->file('img_2');
-        //     $imagePath = $image->store('public/images');
-        //     $imageFileName = basename($imagePath);
-
-
-        //     $imagePath = 'storage/images/' . $imageFileName;
-        // } else {
-        //     $imagePath = null;
-        // }
-
-        // if ($request->hasFile('img_3')) {
-        //     $image = $request->file('img_3');
-        //     $imagePath = $image->store('public/images');
-        //     $imageFileName = basename($imagePath);
-
-
-        //     $imagePath = 'storage/images/' . $imageFileName;
-        // } else {
-        //     $imagePath = null;
-        // }
-
-        // if ($request->hasFile('img_4')) {
-        //     $image = $request->file('img_4');
-        //     $imagePath = $image->store('public/images');
-        //     $imageFileName = basename($imagePath);
-
-
-        //     $imagePath = 'storage/images/' . $imageFileName;
-        // } else {
-        //     $imagePath = null;
-        // }
+        if ($request->has('remove_img_1')) {
+            Storage::delete($idea->img_1);
+            $idea->img_1 = null;
+        }
+        if ($request->has('remove_img_2')) {
+            Storage::delete($idea->img_2);
+            $idea->img_2 = null;
+        }
+        if ($request->has('remove_img_3')) {
+            Storage::delete($idea->img_3);
+            $idea->img_3 = null;
+        }
+        if ($request->has('remove_img_4')) {
+            Storage::delete($idea->img_4);
+            $idea->img_4 = null;
+        }
 
         if ($request->hasFile('img_1')) {
             $idea->img_1 = $this->saveImage($request->file('img_1'));
@@ -256,10 +214,10 @@ class IdeaController extends Controller
 
         $idea->user_id = $request->user_id;
         $idea->description = $request->description;
-        $idea->main_image = $imagePath;
         $idea->money_need = $request->money_need;
         $idea->save();
         return redirect()->route('ideas-index')->with('success', 'Idea has been updated!');
+
     }
 
     /**
@@ -454,14 +412,14 @@ class IdeaController extends Controller
 
 
     private function saveImage($imageFile)
-{
-    if (!$imageFile) {
-        return null;
-    }
+    {
+        if (!$imageFile) {
+            return null;
+        }
 
-    $imagePath = $imageFile->store('public/images');
-    $imageFileName = basename($imagePath);
-    return 'storage/images/' . $imageFileName;
-}
+        $imagePath = $imageFile->store('public/images');
+        $imageFileName = basename($imagePath);
+        return 'storage/images/' . $imageFileName;
+    }
 
 }

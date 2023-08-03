@@ -17,12 +17,12 @@
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Edit description</label>
                                 <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                    value={{ old('description', $idea->description) }}></textarea>
+                                    value="{{ old('description', $idea->description) }}"></textarea>
                             </div>
                             <div class="card">
-                                <label for="formFile" class="form-label">Change main image</label>
                                 <img src="{{ asset($idea->main_image) }}" alt="idea">
                                 <div class="card-body">
+                                    <label for="formFile" class="form-label">Change main image</label>
                                     <input name="main_image" class="form-control mt-2" type="file" id="formFile">
                                 </div>
                             </div>
@@ -30,12 +30,31 @@
                             <div class="card-group">
                                 <div class="card">
                                     <img src="{{ asset($idea->img_1) }}" alt="galery img">
+                                    @if ($idea->img_1)
+                                        <div class="form-check mt-2">
+                                            <input name="remove_img_1" class="form-check-input" type="checkbox"
+                                                id="removeImg1">
+                                            <label class="form-check-label" for="removeImg1">
+                                                Remove image
+                                            </label>
+                                        </div>
+                                    @endif
                                     <div class="card-body">
                                         <input name="img_1" class="form-control mt-2" type="file" id="formFile1">
                                     </div>
+
                                 </div>
                                 <div class="card">
                                     <img src="{{ asset($idea->img_2) }}" alt="galery img">
+                                    @if ($idea->img_2)
+                                        <div class="form-check mt-2">
+                                            <input name="remove_img_2" class="form-check-input" type="checkbox"
+                                                id="removeImg2">
+                                            <label class="form-check-label" for="removeImg2">
+                                                Remove image
+                                            </label>
+                                        </div>
+                                    @endif
                                     <div class="card-body">
                                         <input name="img_2" class="form-control mt-2" type="file" id="formFile2">
                                     </div>
@@ -44,12 +63,30 @@
                             <div class="card-group">
                                 <div class="card">
                                     <img src="{{ asset($idea->img_3) }}" alt="galery img">
+                                    @if ($idea->img_3)
+                                        <div class="form-check mt-2">
+                                            <input name="remove_img_3" class="form-check-input" type="checkbox"
+                                                id="removeImg3">
+                                            <label class="form-check-label" for="removeImg3">
+                                                Remove image
+                                            </label>
+                                        </div>
+                                    @endif
                                     <div class="card-body">
                                         <input name="img_3" class="form-control mt-2" type="file" id="formFile3">
                                     </div>
                                 </div>
                                 <div class="card">
                                     <img src="{{ asset($idea->img_4) }}" alt="galery img">
+                                    @if ($idea->img_4)
+                                        <div class="form-check mt-2">
+                                            <input name="remove_img_4" class="form-check-input" type="checkbox"
+                                                id="removeImg4">
+                                            <label class="form-check-label" for="removeImg4">
+                                                Remove image
+                                            </label>
+                                        </div>
+                                    @endif
                                     <div class="card-body">
                                         <input name="img_4" class="form-control mt-2" type="file" id="formFile4">
                                     </div>
