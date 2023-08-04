@@ -20,20 +20,20 @@
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Main image</label>
-                                <input name="main_image" class="form-control" type="file" id="formFile">
+                                <input name="main_image" class="form-control" type="file" id="formFile" value="{{ old('main_image') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">More images (optional)</label>
-                                <input name="img_1" class="form-control" type="file" id="formFile1">
+                                <input name="img_1" class="form-control" type="file" id="formFile1" value="{{ old('img_1') }}">
                             </div>
                             <div class="mb-3">
-                                <input name="img_2" class="form-control" type="file" id="formFile2">
+                                <input name="img_2" class="form-control" type="file" id="formFile2" value="{{ old('img_2') }}">
                             </div>
                             <div class="mb-3">
-                                <input name="img_3" class="form-control" type="file" id="formFile3">
+                                <input name="img_3" class="form-control" type="file" id="formFile3" value="{{ old('img_3') }}">
                             </div>
                             <div class="mb-3">
-                                <input name="img_4" class="form-control" type="file" id="formFile4">
+                                <input name="img_4" class="form-control" type="file" id="formFile4" value="{{ old('img_4') }}">
                             </div>
 
                             <div class="mb-3">

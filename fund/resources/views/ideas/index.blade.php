@@ -7,7 +7,7 @@
         @forelse($ideas as $idea)
             <div class="col-md-12">
                 <div class="card-header text-center">
-                    <h5 class="card-title">Name: {{ $idea->user->name }}</h5>
+                    <h5 class="card-title">{{ $idea->user->name }}'s idea</h5>
                     <div class="card mb-3">
                         <div class="row g-0">
 
@@ -23,6 +23,7 @@
                                     <p class="card-text">Money I need: {{ $idea->money_need }} € </p>
                                     <p class="card-text">Money I have: {{ $idea->money_got }} € </p>
 
+                                    @if ($idea->money_need >= $idea->money_got)
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-striped" role="progressbar"
                                             style="width: {{ ($idea->money_got / $idea->money_need) * 100 }}%;"
@@ -31,12 +32,14 @@
                                             {{ round(($idea->money_got / $idea->money_need) * 100, 2) }}%
                                         </div>
                                     </div>
-
+                                    @endif
 
                                     <div class="button-group">
+                                        @if ($idea->money_need >= $idea->money_got)
                                         <a class="btn btn-success" href="{{ route('ideas-edit', $idea) }}">
                                             Edit
                                         </a>
+                                        @endif
                                         <a class="btn btn-danger" href="{{ route('ideas-delete', $idea) }}">
                                             Delete
                                         </a>
@@ -127,9 +130,9 @@
                 <p class="text-center">No ideas</p>
             </li>
         @endforelse
-        {{-- <div>
-            {{ $ideas->links() }}
-        </div> --}}
+        
+            {{-- {{ $ideas->links() }} --}}
+        
     </div>
 
 @endsection

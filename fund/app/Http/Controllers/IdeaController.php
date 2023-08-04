@@ -21,7 +21,7 @@ class IdeaController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        $ideas = Idea::all();
+        $ideas = Idea::paginate(5);
 
         // $ideas = $ideas->paginate(5)->withQueryString();
 
