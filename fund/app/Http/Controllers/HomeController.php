@@ -26,9 +26,11 @@ class HomeController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        $ideas = Idea::all();
+        $ideas = Idea::orderByDesc('love')->paginate(2);
 
-        return view('home', ['ideas' => $ideas,
-        'tags' => $tags]);
+        return view('home', [
+            'ideas' => $ideas,
+        'tags' => $tags
+    ]);
     }
 }

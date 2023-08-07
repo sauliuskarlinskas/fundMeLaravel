@@ -49,10 +49,7 @@ class User extends Authenticatable
         return $this->hasMany(Idea::class, 'user_id', 'id');
     }
 
-    public function hearts()
-    {
-        return $this->belongsToMany(Idea::class, 'user_idea_love', 'user_id', 'idea_id');
-    }
+   
 
    
 

@@ -24,24 +24,27 @@
                                     <p class="card-text">Money I have: {{ $idea->money_got }} € </p>
 
                                     @if ($idea->money_need >= $idea->money_got)
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-striped" role="progressbar"
-                                            style="width: {{ ($idea->money_got / $idea->money_need) * 100 }}%;"
-                                            aria-valuenow="{{ $idea->money_got }}" aria-valuemin="0"
-                                            aria-valuemax="{{ $idea->money_need }}">
-                                            {{ round(($idea->money_got / $idea->money_need) * 100, 2) }}%
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{ ($idea->money_got / $idea->money_need) * 100 }}%;"
+                                                aria-valuenow="{{ $idea->money_got }}" aria-valuemin="0"
+                                                aria-valuemax="{{ $idea->money_need }}">
+                                                {{ round(($idea->money_got / $idea->money_need) * 100, 2) }}%
+                                            </div>
                                         </div>
-                                    </div>
                                     @endif
 
                                     <div class="button-group">
                                         @if ($idea->money_need >= $idea->money_got)
-                                        <a class="btn btn-success" href="{{ route('ideas-edit', $idea) }}">
-                                            Edit
-                                        </a>
+                                            <a class="btn btn-info" href="{{ route('ideas-edit', $idea) }}">
+                                                Edit
+                                            </a>
                                         @endif
                                         <a class="btn btn-danger" href="{{ route('ideas-delete', $idea) }}">
                                             Delete
+                                        </a>
+                                        <a class="btn btn-success">
+                                            Approve
                                         </a>
                                     </div>
 
@@ -130,9 +133,11 @@
                 <p class="text-center">No ideas</p>
             </li>
         @endforelse
-        
-            {{-- {{ $ideas->links() }} --}}
-        
+
+        <div class="col-md-12 mt-4">
+            {{ $ideas->links() }}
+        </div>
+
     </div>
 
 @endsection

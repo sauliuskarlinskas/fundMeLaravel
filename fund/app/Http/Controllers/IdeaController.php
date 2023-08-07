@@ -21,9 +21,8 @@ class IdeaController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        $ideas = Idea::paginate(5);
+        $ideas = Idea::orderByDesc('money_need')->paginate(2);
 
-        // $ideas = $ideas->paginate(5)->withQueryString();
 
         return view('ideas.index', [
             'ideas' => $ideas,
@@ -375,12 +374,6 @@ class IdeaController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        // Check if the new donation amount doesn't exceed the remaining money needed.
-        // $remainingMoneyNeeded = $idea->money_need - $idea->money_got;
-        // if ($amount > $remainingMoneyNeeded) {
-        //     return redirect()->back()->withErrors(['amount' => 'The amount exceeds the remaining money needed.']);
-        // }
-
         if ($request->has('add')) {
             $amount = $request->input('amount');
 
@@ -409,6 +402,8 @@ class IdeaController extends Controller
         // Redirect back to the page after giving the heart
         return redirect()->back()->with('success', 'Heart has been added!');
     }
+
+
 
 
     private function saveImage($imageFile)

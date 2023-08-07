@@ -17,4 +17,11 @@ class Idea extends Model
     {
         return $this->belongsToMany(Tag::class, 'idea_tags', 'idea_id', 'tag_id');
     }
+
+    public function usersWhoLoved()
+    {
+        return $this->belongsToMany(User::class, 'idea_love', 'idea_id', 'user_id');
+    }
 }
+
+
