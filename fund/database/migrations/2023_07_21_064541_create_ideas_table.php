@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->char('description',255);
+            $table->text('description');
             $table->binary('main_image')->nullable();
             $table->char('money_need',30);
             $table->char('money_got',30);

@@ -16,7 +16,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3" value={{ old('description')}}></textarea>
+                                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ old('description')}}</textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Main image</label>

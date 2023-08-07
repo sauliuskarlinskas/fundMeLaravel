@@ -54,9 +54,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Idea::class, 'user_idea_love', 'user_id', 'idea_id');
     }
 
-    public function hasGivenHeartToIdea(Idea $idea)
-    {
-        return $this->hearts()->where('idea_id', $idea->id)->exists();
-    }
+   
 
 }

@@ -74,8 +74,8 @@ class IdeaController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'description' => 'required|string|max:1000',
-                'main_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'description' => 'required|max:500',
+                'main_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'img_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'img_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'img_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -84,7 +84,7 @@ class IdeaController extends Controller
             ],
             [
                 'description.required' => 'Please enter description of your idea!',
-                'description.max' => 'The description cannot be more than 1000 characters.',
+                'description.max' => 'The description cannot be more than 500 characters.',
                 'main_image.required' => 'Please upload a picture!',
                 'money_need.required' => 'Please enter the amount you wish to get!'
             ]
@@ -159,7 +159,7 @@ class IdeaController extends Controller
             $request->all(),
             [
                 'description' => 'required|string|max:1000',
-                'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'main_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'money_need' => 'required|numeric|min:1',
             ],
             [
