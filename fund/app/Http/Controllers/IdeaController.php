@@ -108,6 +108,7 @@ class IdeaController extends Controller
         $idea->money_need = $request->money_need;
         $idea->money_got = 0;
         $idea->love = 0;
+        $idea->approved = false;
         $idea->save();
         return redirect()->route('ideas-index')->with('success', 'New idea has been added!');
     }
@@ -415,6 +416,15 @@ class IdeaController extends Controller
         $imagePath = $imageFile->store('public/images');
         $imageFileName = basename($imagePath);
         return 'storage/images/' . $imageFileName;
+    }
+
+    public function approve(Idea $idea)
+    {
+
+        $idea->approved = true;
+        $idea->save();
+
+        return redirect()->route('ideas-index')->with('success', 'Idea has been approved.');
     }
 
 }

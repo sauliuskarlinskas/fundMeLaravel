@@ -19,6 +19,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    @inject('role', 'App\Services\RolesService')
 
 </head>
 
@@ -32,7 +33,11 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <div class="container">
-                            <a href="{{ url('/home') }}">Home</a>
+                            @if (Request::is('home'))
+                                <h5><b>Home page</b></h5>
+                            @else
+                                <a class="home" href="{{ url('/home') }}">Home</a>
+                            @endif
                         </div>
                     </ul>
 
@@ -51,12 +56,32 @@
                                     <a class="dropdown-item" href="{{ route('ideas-index') }}">
                                         Ideas List
                                     </a>
+
                                     <a class="dropdown-item" href="{{ route('ideas-create') }}">
                                         Add Idea
                                     </a>
 
                                 </div>
                             </li>
+                            @if ($role->auth(['A']))
+                                <li class="nav-item dropdown" role="button" tabindex="0">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Tags
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                        <a class="dropdown-item" href="{{ route('tags-index') }}">
+                                            Tags List
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('tags-create') }}">
+                                            Add Tag
+                                        </a>
+
+                                    </div>
+                                </li>
+                            @endif
                         @endauth
 
                         <!-- Authentication Links -->
@@ -75,8 +100,9 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a style="color: crimson" id="navbarDropdown" class="nav-link dropdown-toggle"
+                                    href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 

@@ -43,13 +43,17 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    const ROLES = [
+        0 => 'G',//'guest',
+        1 => 'U',//'user',
+        20 => 'A'//'admin',
+    ];
+
 
     public function ideas()
     {
         return $this->hasMany(Idea::class, 'user_id', 'id');
     }
-
-   
 
    
 

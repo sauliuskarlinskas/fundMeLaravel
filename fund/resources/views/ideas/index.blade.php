@@ -1,3 +1,4 @@
+@inject('role', 'App\Services\RolesService')
 @extends('layouts.app')
 
 
@@ -7,7 +8,7 @@
         @forelse($ideas as $idea)
             <div class="col-md-12">
                 <div class="card-header text-center">
-                    <h5 class="card-title">{{ $idea->user->name }}'s idea</h5>
+                    <h5 style="color: crimson" class="card-title">{{ $idea->user->name }}'s idea</h5>
                     <div class="card mb-3">
                         <div class="row g-0">
 
@@ -40,12 +41,17 @@
                                                 Edit
                                             </a>
                                         @endif
-                                        <a class="btn btn-danger" href="{{ route('ideas-delete', $idea) }}">
-                                            Delete
-                                        </a>
-                                        <a class="btn btn-success">
-                                            Approve
-                                        </a>
+                                        @if ($role->auth(['A']))
+                                            <a class="btn btn-danger" href="{{ route('ideas-delete', $idea) }}">
+                                                Delete
+                                            </a>
+                                            
+                                            @if ($role->auth(['A']) && !$idea->approved)
+                                                <a class="btn btn-success" href="{{ route('ideas-approve', $idea) }}">
+                                                    Approve
+                                                </a>
+                                            @endif
+                                        @endif
                                     </div>
 
                                     <div class="add-tag">

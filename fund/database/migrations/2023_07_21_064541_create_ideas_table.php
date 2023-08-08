@@ -24,6 +24,7 @@ return new class extends Migration
             $table->binary('img_2')->nullable();
             $table->binary('img_3')->nullable();
             $table->binary('img_4')->nullable();
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
