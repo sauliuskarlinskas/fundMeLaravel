@@ -21,7 +21,7 @@ class IdeaController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        $ideas = Idea::orderByDesc('money_need')->paginate(2);
+        $ideas = Idea::orderByDesc('money_need')->paginate(5);
 
 
         return view('ideas.index', [
@@ -226,17 +226,7 @@ class IdeaController extends Controller
 
     public function delete(Idea $idea)
     {
-        // Check if the user is authenticated
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'You need to log in to delete an idea.');
-        }
-
-        // Check if the authenticated user is the creator of the idea
-        if (Auth::user()->id !== $idea->user_id) {
-            return redirect()->route('ideas-index')->with('error', 'You are not authorized to delete this idea.');
-        }
-
-
+       
         return view('ideas.delete', [
             'idea' => $idea
         ]);
@@ -244,10 +234,6 @@ class IdeaController extends Controller
 
     public function destroy(Idea $idea)
     {
-        // Check if the user is authorized to delete the idea
-        if (Gate::denies('delete-idea', $idea)) {
-            return redirect()->route('ideas-index')->with('error', 'You are not authorized to delete this idea.');
-        }
 
         $idea->delete();
         return redirect()
@@ -382,7 +368,7 @@ class IdeaController extends Controller
 
             $idea->save();
             return redirect()
-                ->route('home')
+            ->back()
                 ->with('success', ' Thank you for your kindness!');
         }
 
@@ -401,7 +387,7 @@ class IdeaController extends Controller
         $idea->save();
 
         // Redirect back to the page after giving the heart
-        return redirect()->back()->with('success', 'Heart has been added!');
+        return redirect()->back()->with('success', 'Heart has been given!');
     }
 
 

@@ -4,7 +4,6 @@
 
 @section('content')
     <div class="container">
-
         @forelse($ideas as $idea)
             <div class="col-md-12">
                 <div class="card-header text-center">
@@ -14,12 +13,14 @@
 
                             <div class="col-md-6">
                                 <img src="{{ asset($idea->main_image) }}" class="img-fluid rounded-start" alt="idea">
-
                             </div>
 
                             <div class="col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title">Name: {{ $idea->user->name }}</h5>
+                                    @if (!$idea->approved)
+                                        <p style="color: crimson" class="card-text">Not approved by ADMIN, yet!</p>
+                                    @endif
                                     <p class="card-text">{{ $idea->description }}</p>
                                     <p class="card-text">Money I need: {{ $idea->money_need }} € </p>
                                     <p class="card-text">Money I have: {{ $idea->money_got }} € </p>
@@ -36,7 +37,7 @@
                                     @endif
 
                                     <div class="button-group">
-                                        @if ($idea->money_need >= $idea->money_got)
+                                        @if (!$idea->approved)
                                             <a class="btn btn-info" href="{{ route('ideas-edit', $idea) }}">
                                                 Edit
                                             </a>
@@ -45,12 +46,11 @@
                                             <a class="btn btn-danger" href="{{ route('ideas-delete', $idea) }}">
                                                 Delete
                                             </a>
-                                            
-                                            @if ($role->auth(['A']) && !$idea->approved)
-                                                <a class="btn btn-success" href="{{ route('ideas-approve', $idea) }}">
-                                                    Approve
-                                                </a>
-                                            @endif
+                                        @endif
+                                        @if ($role->auth(['A']) && !$idea->approved)
+                                            <a class="btn btn-success" href="{{ route('ideas-approve', $idea) }}">
+                                                Approve
+                                            </a>
                                         @endif
                                     </div>
 
@@ -90,13 +90,14 @@
 
                             </div>
 
-
                             <div class="tag-line">
                                 @foreach ($idea->tags as $tag)
                                     <form class="tag-form" action="{{ route('ideas-remove-tag', [$idea, $tag]) }}"
                                         method="post">
-                                        <span class="badge bg-primary">#{{ $tag->name }}<button type="submit"
-                                                class="btn-close"></button></span>
+                                        <span class="badge bg-primary">#{{ $tag->name }}@if ($role->auth(['A']))
+                                                <button type="submit" class="btn-close"></button>
+                                            @endif
+                                        </span>
                                         @csrf
                                         @method('delete')
                                     </form>
@@ -126,24 +127,29 @@
                                 @endif
                             </div>
 
-
                         </div>
 
                     </div>
                 </div>
             </div>
 
+            @empty
+                <li class="list-group-item">
+                    <p class="text-center">No ideas</p>
+                </li>
+            @endforelse
 
-        @empty
-            <li class="list-group-item">
-                <p class="text-center">No ideas</p>
-            </li>
-        @endforelse
+            <div class="footer">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        {{ $ideas->render() }}
+                    </ul>
+                </nav>
+                <div>
+                    <a href="#" class="btn btn-primary" style="back-to-top" id="backToTop">^</a>
+                </div>
+            </div>
 
-        <div class="col-md-12 mt-4">
-            {{ $ideas->links() }}
         </div>
 
-    </div>
-
-@endsection
+    @endsection

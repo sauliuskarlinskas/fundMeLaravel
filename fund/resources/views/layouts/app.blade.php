@@ -28,18 +28,25 @@
         <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background-color: #587c5b ">
             <div class="container">
                 <img src="{{ url('/images/hands-logo.png') }}" alt="Image" width="40" />
+                <ul class="navbar-nav me-auto">
+                    <div class="container">
+                        @if (Request::is('home'))
+                            <h5><b>Home page</b></h5>
+                        @else
+                            <a class="home" href="{{ url('/home') }}">Home</a>
+                        @endif
+                    </div>
+                </ul>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <div class="container">
-                            @if (Request::is('home'))
-                                <h5><b>Home page</b></h5>
-                            @else
-                                <a class="home" href="{{ url('/home') }}">Home</a>
-                            @endif
-                        </div>
-                    </ul>
+                   
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -128,6 +135,7 @@
             @include('msg.message')
             @include('msg.errors')
             @yield('content')
+            @yield('scripts')
         </main>
     </div>
 </body>

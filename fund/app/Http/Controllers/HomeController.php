@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Idea;
 use App\Models\Tag;
-
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -26,11 +25,15 @@ class HomeController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        $ideas = Idea::orderByDesc('love')->paginate(2);
+        $ideas = Idea::orderByDesc('love')->paginate(5);
+
+        $approvedIdeas = $ideas->where('approved', true);
+        $ideaCount = $approvedIdeas->count();
 
         return view('home', [
             'ideas' => $ideas,
-        'tags' => $tags
-    ]);
+            'tags' => $tags,
+            'ideaCount' => $ideaCount
+        ]);
     }
 }
