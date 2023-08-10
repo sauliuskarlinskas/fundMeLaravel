@@ -37,7 +37,6 @@
                         @endif
                     </div>
                 </ul>
-
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -46,46 +45,39 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                   
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-
                         @auth
                             <li class="nav-item dropdown" role="button" tabindex="0">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Ideas
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
                                     <a class="dropdown-item" href="{{ route('ideas-index') }}">
                                         Ideas List
                                     </a>
-
                                     <a class="dropdown-item" href="{{ route('ideas-create') }}">
                                         Add Idea
                                     </a>
-
                                 </div>
                             </li>
+
                             @if ($role->auth(['A']))
                                 <li class="nav-item dropdown" role="button" tabindex="0">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         Tags
                                     </a>
-
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
                                         <a class="dropdown-item" href="{{ route('tags-index') }}">
                                             Tags List
                                         </a>
                                         <a class="dropdown-item" href="{{ route('tags-create') }}">
                                             Add Tag
                                         </a>
-
                                     </div>
                                 </li>
                             @endif
@@ -93,7 +85,6 @@
 
                         <!-- Authentication Links -->
                         @guest
-
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -127,6 +118,7 @@
                             </li>
                         @endguest
                     </ul>
+
                 </div>
             </div>
         </nav>

@@ -17,17 +17,14 @@
                                 <div class="col-md-6">
                                     <img src="{{ asset($idea->main_image) }}" class="img-fluid rounded-start" alt="idea">
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="card-body">
-
                                         <p class="card-text">{{ $idea->description }}</p>
                                         <p class="card-text">Money I need: <b>{{ $idea->money_need }}</b> € </p>
                                         <p class="card-text">Money I have: <b>{{ $idea->money_got }} €</b></p>
                                         @if ($idea->money_need <= $idea->money_got)
                                             <p><b>I have reached my goal!!! THANK YOU!!!</b></p>
                                         @endif
-
                                         @if ($idea->money_need >= $idea->money_got)
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-striped" role="progressbar"
@@ -44,7 +41,6 @@
                                                 <a class="btn btn-success"
                                                     href="{{ route('ideas-donate', $idea) }}">Donate</a>
                                             @endif
-
                                             @auth
                                                 <form action="{{ route('ideas-add-love', $idea) }}" method="post">
                                                     <button class="btn btn-danger bi bi-suit-heart-fill" type="submit">
@@ -141,7 +137,7 @@
                 </ul>
             </nav>
             <div>
-                <a href="#" class="btn btn-primary" style="back-to-top" id="backToTop">^</a>
+                <button type="button" class="btn btn-primary" id="btn-back-to-top">^</button>
             </div>
         </div>
     </div>
